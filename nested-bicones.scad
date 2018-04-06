@@ -1,3 +1,8 @@
+/* discrete parameters */
+begin = 3;
+count = 3;
+
+/* dimensions */
 zsize = 10;
 shrink = 3;
 wall_thick = 1;
@@ -7,7 +12,7 @@ step = gap + wall_thick;
 
 $fn = 12;
 
-for (i = [3:10]) {
+for (i = [begin:begin + count - 1]) {
     unit(i * step);
 }
 
