@@ -2,7 +2,7 @@
 SMOOTH_FACETS = 240;
 
 /* discrete parameters */
-facets = SMOOTH_FACETS;
+facets = 120;
 count = 6;
 spherical = true;
 
