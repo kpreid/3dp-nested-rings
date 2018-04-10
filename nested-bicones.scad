@@ -6,15 +6,15 @@ count = 6;
 initial_radius = 16;
 zradius = 10;
 shrink = 3.1;
-initial_wall_thick = 0.8;
-gap = 2.2;
+initial_wall_thick = 1.4;
+gap = 2.0;
 
 step = gap + initial_wall_thick;
 
 
 for (i = [0:count - 1]) {
     radius = initial_radius + i * step;
-    unit(radius, initial_wall_thick * (radius / initial_radius));
+    unit(radius, initial_wall_thick /* * (radius / initial_radius) */);
 }
 
 module unit(d2, wall_thick) {
