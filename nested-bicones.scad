@@ -1,33 +1,48 @@
+/* helpers */
+SMOOTH_FACETS = 240;
+MINIMUM_SURFACE_GAP = 0.5;
+
 /* discrete parameters */
-facets = 240;
+spherical = false;
+facets = spherical ? SMOOTH_FACETS / 2 : SMOOTH_FACETS;
 count = 6;
 
 /* dimensions */
 initial_radius = 16;
 zradius = 10;
-shrink = 3.1;
-initial_wall_thick = 1.4;
-gap = 2.0;
+chevron_shrink = 3.1;
+wall_thick = spherical ? 1 : 1.4;
+gap = spherical ? MINIMUM_SURFACE_GAP : 2;
 
-step = gap + initial_wall_thick;
+step = gap + wall_thick;
 
 
 for (i = [0:count - 1]) {
     radius = initial_radius + i * step;
-    unit(radius, initial_wall_thick /* * (radius / initial_radius) */);
+    unit(radius);
 }
 
-module unit(d2, wall_thick) {
-    d1 = d2 - shrink;
+module unit(r2) {
     
-    //linear_extrude(2)
-    rotate_extrude($fn = facets)
-    polygon([
-        [d1, zradius],
-        [d2, 0],
-        [d1, -zradius],
-        [d1 - wall_thick, -zradius],
-        [d2 - wall_thick, 0],
-        [d1 - wall_thick, zradius],
-    ]);
+    if (spherical) {
+        intersection() {
+            difference() {
+                sphere(r = r2, $fn = facets);
+                sphere(r = r2 - wall_thick, $fn = facets);
+            }
+            cube([r2 * 3, r2 * 3, zradius * 2], center=true);
+        }
+    } else {
+        r1 = r2 - chevron_shrink;
+        //linear_extrude(2)
+        rotate_extrude($fn = facets)
+        polygon([
+            [r1, zradius],
+            [r2, 0],
+            [r1, -zradius],
+            [r1 - wall_thick, -zradius],
+            [r2 - wall_thick, 0],
+            [r1 - wall_thick, zradius],
+        ]);
+    }
 }
