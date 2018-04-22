@@ -3,7 +3,7 @@ SMOOTH_FACETS = 240;
 MINIMUM_SURFACE_GAP = 0.5;
 
 /* discrete parameters */
-spherical = false;
+spherical = true;
 facets = spherical ? SMOOTH_FACETS / 2 : SMOOTH_FACETS;
 count = 6;
 
