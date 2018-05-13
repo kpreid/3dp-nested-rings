@@ -8,10 +8,10 @@ facets = spherical ? SMOOTH_FACETS / 2 : SMOOTH_FACETS;
 count = 6;
 
 /* dimensions */
-initial_radius = 16;
+initial_radius = 23;
 zradius = 10;
 chevron_shrink = 3.1;
-wall_thick = spherical ? 1 : 1.4;
+wall_thick = 1.4;
 gap = spherical ? MINIMUM_SURFACE_GAP : 2;
 
 step = gap + wall_thick;
