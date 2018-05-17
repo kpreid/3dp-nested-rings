@@ -47,11 +47,16 @@ module unit(r2) {
                 circle(r = r2 - wall_thick, $fn = facets);
                 
                 if (internal_sphere_notch_zradius > 0) {
-                    intersection() {
-                        circle(r = r2 - internal_sphere_notch_wall_thick, $fn = facets);
+                    minkowski() {
+                        intersection() {
+                            circle(r = r2 - wall_thick, $fn = facets);
 
-                        translate([0, -internal_sphere_notch_zradius])
-                        square([r2 * 1.5, internal_sphere_notch_zradius * 2]);
+                            translate([0, -internal_sphere_notch_zradius])
+                            square([r2 * 1.5, internal_sphere_notch_zradius * 2]);
+                        }
+                        
+                        // diamond shape to create 45° overhangs
+                        circle(r=wall_thick - internal_sphere_notch_wall_thick, $fn=4);
                     }
                 }
             }
