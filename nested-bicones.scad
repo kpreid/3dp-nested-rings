@@ -11,7 +11,7 @@ count = 6;
 initial_radius = 16;
 zradius = 10;
 chevron_shrink = 3.1;
-wall_thick = spherical ? 1 : 1.4;
+wall_thick = 1.4;
 gap = spherical ? MINIMUM_SURFACE_GAP : 2;
 
 step = gap + wall_thick;
