@@ -38,12 +38,15 @@ module main() {
 module unit(r2) {
     
     if (spherical) {
+        rotate_extrude($fn = facets)
         intersection() {
             difference() {
-                sphere(r = r2, $fn = facets);
-                sphere(r = r2 - wall_thick, $fn = facets);
+                circle(r = r2, $fn = facets);
+                circle(r = r2 - wall_thick, $fn = facets);
             }
-            cube([r2 * 3, r2 * 3, zradius * 2], center=true);
+            
+            translate([0, -zradius])
+            square([r2 * 1.5, zradius * 2]);
         }
     } else {
         r1 = r2 - chevron_shrink;
