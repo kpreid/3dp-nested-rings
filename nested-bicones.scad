@@ -14,7 +14,7 @@ chevron_shrink = 3.1;
 wall_thick = 1.4;
 gap = spherical ? MINIMUM_SURFACE_GAP : 2;
 internal_sphere_notch_zradius = 3;
-internal_sphere_notch_wall_thick = 0.4;
+internal_sphere_notch_wall_thick = 0.6;
 
 step = gap + wall_thick;
 
