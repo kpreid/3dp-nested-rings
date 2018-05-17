@@ -16,10 +16,23 @@ gap = spherical ? MINIMUM_SURFACE_GAP : 2;
 
 step = gap + wall_thick;
 
+/* special options */
+preview_cut = false;
 
-for (i = [0:count - 1]) {
-    radius = initial_radius + i * step;
-    unit(radius);
+difference() {
+    main();
+    
+    if (preview_cut)
+    translate([0, 0, -500])
+    cube([1000, 1000, 1000]);
+}
+
+
+module main() {
+    for (i = [0:count - 1]) {
+        radius = initial_radius + i * step;
+        unit(radius);
+    }
 }
 
 module unit(r2) {
