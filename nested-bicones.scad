@@ -13,6 +13,8 @@ zradius = 10;
 chevron_shrink = 3.1;
 wall_thick = 1.4;
 gap = spherical ? MINIMUM_SURFACE_GAP : 2;
+internal_sphere_notch_zradius = 3;
+internal_sphere_notch_wall_thick = 0.4;
 
 step = gap + wall_thick;
 
@@ -43,6 +45,15 @@ module unit(r2) {
             difference() {
                 circle(r = r2, $fn = facets);
                 circle(r = r2 - wall_thick, $fn = facets);
+                
+                if (internal_sphere_notch_zradius > 0) {
+                    intersection() {
+                        circle(r = r2 - internal_sphere_notch_wall_thick, $fn = facets);
+
+                        translate([0, -internal_sphere_notch_zradius])
+                        square([r2 * 1.5, internal_sphere_notch_zradius * 2]);
+                    }
+                }
             }
             
             translate([0, -zradius])
