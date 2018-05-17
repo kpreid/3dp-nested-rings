@@ -1,6 +1,6 @@
 /* helpers */
 SMOOTH_FACETS = 240;
-MINIMUM_SURFACE_GAP = 0.5;
+MINIMUM_SURFACE_GAP = 0.6;  // 0.5 works but requires some breaking away and does not spin smoothly
 
 /* discrete parameters */
 spherical = true;
