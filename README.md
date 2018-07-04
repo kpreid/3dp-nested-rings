@@ -1,6 +1,10 @@
 An easy-to-print fidget toy made of permanently nested rings that can tumble and shift around.
 
-A number of styles are available — modify the parameters as explained in the comments.
+Two basic styles are available; the biconical style allows the rings to shift along their axis while still nesting solidly. The spherical style has a close fit.
+
+Both styles allow the rings to tumble and be spun like in a gimbal.
+
+I highly recommend printing the rings with colored edge bands by changing the filament during printing. There is an option to have a thin middle band for transparency.
 
 # License
 
