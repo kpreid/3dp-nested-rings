@@ -16,8 +16,8 @@ ring_width = 20;
 // Thickness of each ring, in millimeters. Setting this too low will result in rings which pop apart too easily.
 ring_thickness = 1.4;
 
-// Radius of the midline of the smallest ring, in millimeters. The opening will be smaller than this depending on the type.
-initial_radius = 16;
+// Radius of the midline of the largest ring, in millimeters.
+outer_radius = 33;
 
 // For biconical rings, the faces of the rings will have a radius this many millimeters smaller than the center. Ignored for spherical rings.
 bicone_opening_reduction = 3.1;
@@ -59,7 +59,7 @@ difference() {
 
 module main() {
     for (i = [0:ring_count - 1]) {
-        radius = initial_radius + i * step;
+        radius = outer_radius - i * step;
         unit(radius);
     }
 }
