@@ -4,7 +4,8 @@
 preview_cut = false;
 
 // Style of rings. Biconical rings can slide axially as well as tumbling; spherical rings are close-fitting and more likely to jam.
-type = "biconical";  // [biconical:Biconical, spherical:Spherical]
+type = "biconical";  // [biconical:Biconical, spherical:Spherical, spherical_one_hole:Spherical (closed on top)]
+
 
 // Number of rings to generate. The size is determined starting from the center, so more rings is larger.
 ring_count = 6;
@@ -29,7 +30,7 @@ spherical_thin_band_thickness = 0.6;
 
 /* [Hidden] */
 
-spherical = type == "spherical";  // may be more than one sphere-ish type
+spherical = type == "spherical" || type == "spherical_one_hole";
 
 // Chosen constants and not-exposed calculations
 SMOOTH_FACETS = 240;
@@ -82,7 +83,7 @@ module unit(r2) {
             }
             
             translate([0, -zradius])
-            square([r2 * 1.5, zradius * 2]);
+            square([r2 * 1.5, type == "spherical_one_hole" ? 1000 : zradius * 2]);
         }
         
     } else if (type == "biconical") {
