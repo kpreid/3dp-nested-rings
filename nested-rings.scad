@@ -24,7 +24,7 @@ bicone_opening_reduction = 3.1;
 // For spherical rings, the width of a centered thinner band of each ring, in millimeters. This is intended for rings printed with transparent material in that band. Set to zero to disable.
 spherical_thin_band_width = 0;
 
-// For spherical rings, the thickness of a centered thinner band of eacn ring, in millimeters. This is intended for rings printed with transparent material in that band. Must be smaller than the ring thickness. Ignored if thin band width is zero.
+// For spherical rings, the thickness of a centered thinner band of each ring, in millimeters. This is intended for rings printed with transparent material in that band. Cannot be larger than the ring thickness. Ignored if thin band width is zero.
 spherical_thin_band_thickness = 0.6;
 
 /* [Hidden] */
@@ -66,7 +66,7 @@ module unit(r2) {
                 circle(r = r2, $fn = facets);
                 circle(r = r2 - ring_thickness, $fn = facets);
                 
-                if (internal_sphere_notch_zradius > 0) {
+                if (spherical_thin_band_width > 0) {
                     minkowski() {
                         intersection() {
                             circle(r = r2 - ring_thickness, $fn = facets);
