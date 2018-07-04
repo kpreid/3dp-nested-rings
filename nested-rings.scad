@@ -10,22 +10,22 @@ type = "biconical";  // [biconical:Biconical, spherical:Spherical]
 ring_count = 6;
 
 // Width of the rings (z axis height as printed), in millimeters.
-height = 20;
+ring_width = 20;
+
+// Thickness of each ring, in millimeters. Setting this too low will result in rings which pop apart too easily.
+ring_thickness = 1.4;
 
 // Radius of the midline of the smallest ring, in millimeters. The opening will be smaller than this depending on the type.
 initial_radius = 16;
 
 // For biconical rings, the faces of the rings will have a radius this many millimeters smaller than the center. Ignored for spherical rings.
-cone_opening_reduction = 3.1;
+bicone_opening_reduction = 3.1;
 
-// Thickness of each ring, in millimeters. Setting this too low will result in rings which pop apart too easily.
-ring_thickness = 1.4;
+// For spherical rings, the width of a centered thinner band of each ring, in millimeters. This is intended for rings printed with transparent material in that band. Set to zero to disable.
+spherical_thin_band_width = 0;
 
-
-/* dimensions */
-internal_sphere_notch_zradius = 3;
-internal_sphere_notch_wall_thick = 0.6;
-
+// For spherical rings, the thickness of a centered thinner band of eacn ring, in millimeters. This is intended for rings printed with transparent material in that band. Must be smaller than the ring thickness. Ignored if thin band width is zero.
+spherical_thin_band_thickness = 0.6;
 
 /* [Hidden] */
 
@@ -37,8 +37,8 @@ MINIMUM_SURFACE_GAP = 0.6;  // 0.5 works but requires some breaking away and doe
 gap = spherical ? MINIMUM_SURFACE_GAP : 2;
 facets = spherical ? SMOOTH_FACETS / 2 : SMOOTH_FACETS;  // make spheres somewhat less super-expensive
 
-// Derived values
-zradius = height / 2;
+// Derived values / aliases
+zradius = ring_width / 2;
 step = gap + ring_thickness;
 
 
@@ -71,12 +71,12 @@ module unit(r2) {
                         intersection() {
                             circle(r = r2 - ring_thickness, $fn = facets);
 
-                            translate([0, -internal_sphere_notch_zradius])
-                            square([r2 * 1.5, internal_sphere_notch_zradius * 2]);
+                            translate([0, -spherical_thin_band_width / 2])
+                            square([r2 * 1.5, spherical_thin_band_width]);
                         }
                         
                         // diamond shape to create 45° overhangs
-                        circle(r=ring_thickness - internal_sphere_notch_wall_thick, $fn=4);
+                        circle(r=ring_thickness - spherical_thin_band_thickness, $fn=4);
                     }
                 }
             }
@@ -86,7 +86,7 @@ module unit(r2) {
         }
         
     } else if (type == "biconical") {
-        r1 = r2 - cone_opening_reduction;
+        r1 = r2 - bicone_opening_reduction;
         //linear_extrude(2)
         rotate_extrude($fn = facets)
         polygon([
