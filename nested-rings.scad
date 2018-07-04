@@ -1,25 +1,38 @@
-/* helpers */
-SMOOTH_FACETS = 240;
-MINIMUM_SURFACE_GAP = 0.6;  // 0.5 works but requires some breaking away and does not spin smoothly
+// Variables' comments formatted for Thingiverse Customizer.
 
-/* discrete parameters */
-spherical = false;
-facets = spherical ? SMOOTH_FACETS / 2 : SMOOTH_FACETS;
-count = 6;
+// Style of rings. Biconical rings can slide axially as well as tumbling; spherical rings are close-fitting and more likely to jam.
+type = "biconical";  // [biconical:Biconical, spherical:Spherical]
+
+// Number of rings to generate. The size is determined starting from the center, so more rings is larger.
+ring_count = 6;
+
+// Radius of the midline of the smallest ring. The opening will be smaller than this depending on the type.
+initial_radius = 16;
 
 /* dimensions */
-initial_radius = 16;
 zradius = 10;
 chevron_shrink = 3.1;
 wall_thick = 1.4;
-gap = spherical ? MINIMUM_SURFACE_GAP : 2;
 internal_sphere_notch_zradius = 3;
 internal_sphere_notch_wall_thick = 0.6;
 
-step = gap + wall_thick;
 
 /* special options */
 preview_cut = false;
+
+/* [Hidden] */
+
+spherical = type == "spherical";  // may be more than one sphere-ish type
+
+// Chosen constants and not-exposed calculations
+SMOOTH_FACETS = 240;
+MINIMUM_SURFACE_GAP = 0.6;  // 0.5 works but requires some breaking away and does not spin smoothly
+gap = spherical ? MINIMUM_SURFACE_GAP : 2;
+facets = spherical ? SMOOTH_FACETS / 2 : SMOOTH_FACETS;  // make spheres somewhat less super-expensive
+
+// Derived values
+step = gap + wall_thick;
+
 
 difference() {
     main();
@@ -31,7 +44,7 @@ difference() {
 
 
 module main() {
-    for (i = [0:count - 1]) {
+    for (i = [0:ring_count - 1]) {
         radius = initial_radius + i * step;
         unit(radius);
     }
