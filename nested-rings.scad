@@ -22,11 +22,17 @@ initial_radius = 16;
 // For biconical rings, the faces of the rings will have a radius this many millimeters smaller than the center. Ignored for spherical rings.
 bicone_opening_reduction = 3.1;
 
+// For biconical rings, the amount of space between adjacent rings (when they are concentric), in millimeters. Must be smaller than Bicone Opening Reduction to prevent the rings from just falling apart.
+bicone_gap = 2;
+
 // For spherical rings, the width of a centered thinner band of each ring, in millimeters. This is intended for rings printed with transparent material in that band. Set to zero to disable.
 spherical_thin_band_width = 0;
 
 // For spherical rings, the thickness of a centered thinner band of each ring, in millimeters. This is intended for rings printed with transparent material in that band. Cannot be larger than the ring thickness. Ignored if thin band width is zero.
 spherical_thin_band_thickness = 0.6;
+
+// For spherical rings, the amount of space between adjacent rings, in millimeters. Set this as low as you can without the surfaces fusing when printed.
+spherical_gap = 0.6;
 
 /* [Hidden] */
 
@@ -34,8 +40,7 @@ spherical = type == "spherical" || type == "spherical_one_hole";
 
 // Chosen constants and not-exposed calculations
 SMOOTH_FACETS = 240;
-MINIMUM_SURFACE_GAP = 0.6;  // 0.5 works but requires some breaking away and does not spin smoothly
-gap = spherical ? MINIMUM_SURFACE_GAP : 2;
+gap = spherical ? spherical_gap : bicone_gap;
 facets = spherical ? SMOOTH_FACETS / 2 : SMOOTH_FACETS;  // make spheres somewhat less super-expensive
 
 // Derived values / aliases
